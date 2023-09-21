@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
     final args = ModalRoute.of(context)!.settings.arguments as Map<Object, dynamic>;
     return DetalleScreen(
       pokemon: args['pokemon'],
+      color: args['color'],
       
     );
   },

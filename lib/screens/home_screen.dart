@@ -31,9 +31,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
+      drawer: Drawer(
+  // Agrega un ListView al drawer. Esto asegura que el usuario pueda desplazarse
+  // a través de las opciones en el Drawer si no hay suficiente espacio vertical
+  // para adaptarse a todo.
+  child: ListView(
+    // Importante: elimine cualquier padding del ListView.
+    padding: EdgeInsets.zero,
+    children: <Widget>[
+      DrawerHeader(
+        child: Text('Drawer Header'),
+        decoration: BoxDecoration(
+          color: Colors.blue,
+        ),
+      ),
+      ListTile(
+        title: Text('Item 1'),
+        onTap: () {
+          // Actualiza el estado de la aplicación
+          // ...
+        },
+      ),
+      ListTile(
+        title: Text('Item 2'),
+        onTap: () {
+          // Actualiza el estado de la aplicación
+          // ...
+        },
+      ),
+    ],
+  ),
+),
+
       appBar: AppBar(
-        title: const Text('Home'),
+        title:  Image.asset('assets/img/pokeapi_256.png',fit: BoxFit.contain, width: 100,),
+
+      
         centerTitle: true,
       ),
       body: Center(
@@ -50,11 +84,13 @@ class _HomeScreenState extends State<HomeScreen> {
         print('Nombre del Pokémon: ${e['name']}');
         Navigator.pushNamed(context, 'detalle', arguments: {
     'pokemon': e,
+    'color':e['types'][0]['type']['name']
    
   },);
       },
       child: CardPokemon(
         habilidad: e['name'],
+        color:  e['types'][0]['type']['name'] ,
         name: e['name'],
         url: e['sprites']['other']['dream_world']['front_default'],
       ),
@@ -78,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             heroTag: 'scroll',
-          
+            backgroundColor: Colors.amber,
             child:  Icon(Icons.arrow_circle_up),
           ),
           FloatingActionButton(
@@ -91,10 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             heroTag: 'more',
             child: const Icon(Icons.add_box_outlined),
+            backgroundColor: Colors.amber,
           ),
         ],
       ),
-    );
+    );  
   }
 
   Future<void> fetchData(int limit, int point) async {
